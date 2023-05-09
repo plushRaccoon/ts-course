@@ -48,3 +48,18 @@ let cat = { name: 'Chio', breed: 'scottish' }; // we can't reassign aliases, tho
 // interface works with objects only, whereas alias can describe primitives!! and objects
 // ? after property means optional property or type
 // ! after property means we are 100% sure that property exists
+// type void means that function doesn't return anything
+function multiply(f, s) {
+    if (!s) {
+        return f * f;
+    }
+    return f * s;
+}
+console.log(multiply(3, 5));
+const f1 = () => { };
+const f2 = () => true; // return of data is ignored if function has type void
+// type unknown
+let input;
+input = 3;
+input = [5, 6];
+let res;

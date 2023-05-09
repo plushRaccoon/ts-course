@@ -15,33 +15,37 @@
 // ]
 
 enum QuestionStatus {
-  published = "published",
-  draft = "draft",
-  deleted = "deleted"
+  published = 'published',
+  draft = 'draft',
+  deleted = 'deleted',
 }
 
 type Resp = {
-  quesion: string,
-  answer: string,
-  tags: string[],
-  likes: number,
-  status: QuestionStatus
+  quesion: string;
+  answer: string;
+  tags: string[];
+  likes: number;
+  status: QuestionStatus;
 };
 
-async function getFaqs(req: { topicId: number, status: QuestionStatus }): Promise<Resp[]> {
-	const res: Response = await fetch('/faqs', {
-		method: 'POST',
-		body: JSON.stringify(req)
-	});
-	const data = await res.json();
-	return data;
+async function getFaqs(req: {
+  topicId: number;
+  status: QuestionStatus;
+}): Promise<Resp[]> {
+  const res: Response = await fetch('/faqs', {
+    method: 'POST',
+    body: JSON.stringify(req),
+  });
+  const data = await res.json();
+  return data;
 }
 
-console.log(getFaqs({
-  "topicId": 5,
-  "status": QuestionStatus.published // "draft", "deleted"
-}).then((res: object) => console.log(res)));
-
+console.log(
+  getFaqs({
+    topicId: 5,
+    status: QuestionStatus.published, // "draft", "deleted"
+  }).then((res: object) => console.log(res))
+);
 
 // ex. 2
 
@@ -70,32 +74,50 @@ console.log(getFaqs({
 // };
 
 interface payment {
-  sum: number,
-  from: number,
-  to: number
+  sum: number;
+  from: number;
+  to: number;
 }
 enum paymentStatus {
   success = 'success',
-  failed = 'failed'
+  failed = 'failed',
 }
 
-interface paymentRequest extends payment { }
+interface paymentRequest extends payment {}
 interface dataSuccess extends payment {
-  databaseId: number
+  databaseId: number;
 }
 interface responseSuccess {
-  status: paymentStatus.success,
-  data: dataSuccess
+  status: paymentStatus.success;
+  data: dataSuccess;
 }
 interface responseFailed {
-  status: paymentStatus.failed,
+  status: paymentStatus.failed;
   data: {
-    errorMessage: string,
-    errorCode: number
-  }
+    errorMessage: string;
+    errorCode: number;
+  };
 }
 interface response {
-  status: paymentStatus,
-  data: responseSuccess | responseFailed
+  status: paymentStatus;
+  data: responseSuccess | responseFailed;
 }
 
+type f = (res: responseSuccess | responseFailed) => number;
+
+type resp = responseSuccess | responseFailed;
+
+function isSuccess(res: Res): res is responseSuccess {
+  if (res.status === paymentStatus.success) {
+    return true;
+  }
+  return false;
+}
+
+function getIdFromData(res: resp): number {
+  if (isSuccess(res)) {
+    return res.data.databaseId;
+  } else {
+    throw new Error(res.data.errorMessage);
+  }
+}
