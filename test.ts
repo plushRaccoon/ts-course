@@ -1,18 +1,18 @@
-/* Запрос */
+// ex. 1
 
 /* Ответ */
-[
-	{
-		"question": "Как осуществляется доставка?",
-		"answer": "быстро!",
-		"tags": [
-			"popular",
-			"new"
-		],
-		"likes": 3,
-		"status": "published"
-	}
-]
+// [
+// 	{
+// 		"question": "Как осуществляется доставка?",
+// 		"answer": "быстро!",
+// 		"tags": [
+// 			"popular",
+// 			"new"
+// 		],
+// 		"likes": 3,
+// 		"status": "published"
+// 	}
+// ]
 
 enum QuestionStatus {
   published = "published",
@@ -38,6 +38,64 @@ async function getFaqs(req: { topicId: number, status: QuestionStatus }): Promis
 }
 
 console.log(getFaqs({
-	"topicId": 5,
-	"status": QuestionStatus.published // "draft", "deleted"
-}).then((res: object) => console.log(res)))
+  "topicId": 5,
+  "status": QuestionStatus.published // "draft", "deleted"
+}).then((res: object) => console.log(res)));
+
+
+// ex. 2
+
+// Запрос в виде платежа
+// {
+// 	"sum": 10000,
+// 	"from": 2,
+// 	"to": 4
+// }
+// // Ответ
+// {
+// 	"status": "success",
+// 	"data": {
+// 		"databaseId": 567,
+// 		"sum": 10000,
+// 		"from": 2,
+// 		"to": 4
+// 	}
+// };
+// {
+// 	"status": "failed",
+// 	"data": {
+// 		"errorMessage": "Недостаточно средств",
+// 		"errorCode": 4
+// 	}
+// };
+
+interface payment {
+  sum: number,
+  from: number,
+  to: number
+}
+enum paymentStatus {
+  success = 'success',
+  failed = 'failed'
+}
+
+interface paymentRequest extends payment { }
+interface dataSuccess extends payment {
+  databaseId: number
+}
+interface responseSuccess {
+  status: paymentStatus.success,
+  data: dataSuccess
+}
+interface responseFailed {
+  status: paymentStatus.failed,
+  data: {
+    errorMessage: string,
+    errorCode: number
+  }
+}
+interface response {
+  status: paymentStatus,
+  data: responseSuccess | responseFailed
+}
+

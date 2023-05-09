@@ -1,18 +1,18 @@
 "use strict";
-/* Запрос */
+// ex. 1
 /* Ответ */
-[
-    {
-        "question": "Как осуществляется доставка?",
-        "answer": "быстро!",
-        "tags": [
-            "popular",
-            "new"
-        ],
-        "likes": 3,
-        "status": "published"
-    }
-];
+// [
+// 	{
+// 		"question": "Как осуществляется доставка?",
+// 		"answer": "быстро!",
+// 		"tags": [
+// 			"popular",
+// 			"new"
+// 		],
+// 		"likes": 3,
+// 		"status": "published"
+// 	}
+// ]
 var QuestionStatus;
 (function (QuestionStatus) {
     QuestionStatus["published"] = "published";
@@ -31,3 +31,8 @@ console.log(getFaqs({
     "topicId": 5,
     "status": QuestionStatus.published // "draft", "deleted"
 }).then((res) => console.log(res)));
+var paymentStatus;
+(function (paymentStatus) {
+    paymentStatus["success"] = "success";
+    paymentStatus["failed"] = "failed";
+})(paymentStatus || (paymentStatus = {}));

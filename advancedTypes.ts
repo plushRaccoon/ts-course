@@ -97,8 +97,3 @@ let cat: Cat = { name: 'Chio', breed: 'scottish' }; // we can't reassign aliases
 // ? after property means optional property or type
 // ! after property means we are 100% sure that property exists
 
-
-
-
-
-
