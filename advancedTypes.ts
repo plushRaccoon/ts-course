@@ -118,7 +118,7 @@ const f2: voidFunc = () => true; // return of data is ignored if function has ty
 let input: unknown; // we don't know which type of data is expected at all
 input = 3;
 input = [5, 6];
-let res: string = input; // we cannot reassign type of unknown
+// let res: string = input; // we cannot reassign type of unknown
 let res1: any = input; // valid
 
 async function getData() {
@@ -184,7 +184,7 @@ function isString(x: string | number): boolean {
 
 const nulll: null = null; // we can't assign anything else but null
 const nulll1: any = null; // null is assignable to any
-const nulll2: string = null;
+// const nulll2: string = null; // null is not assignable to string
 
 // types coercion
 
@@ -226,7 +226,7 @@ function userToAdmin(user: Person): Admin { // mapping function in order to make
 
 // type guard
 
-function logId(id: number | string) {
+function logIdi(id: number | string) {
   if (isString1(id)) {
     //..
   } else {
